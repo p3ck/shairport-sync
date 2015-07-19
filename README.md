@@ -179,9 +179,7 @@ Apart from the following options, all command line options can be replaced by se
 * The `-k` option causes Shairport Sync to kill an existing Shairport Sync daemon and then quit. You need to have sudo privileges for this.
 
 The System V init script at `/etc/init.d/shairport-sync` has a bare minimum :
-`-d`
-
-Basically all it does is put the program in daemon mode. The program will read its settings from the configuration file, normally `/etc/shairport-sync.conf`.
+`-d`. Basically all it does is put the program in daemon mode. The program will read its settings from the configuration file, normally `/etc/shairport-sync.conf`.
 
 *Examples*
 
@@ -197,11 +195,11 @@ alsa = {
 };
 ```
 
-This gives the service a particular name -- "Joe's Stereo" and specifies that audio device hw:0 be used.
+This gives the service a particular name — "Joe's Stereo" and specifies that audio device hw:0 be used.
 
-For best results -- including getting true mute and instant response to volume control and pause commands -- you should access the hardware volume controls. Use `amixer` or `alsamixer` or similar to discover the name of the volume controller to be used after the `-c` option.
+For best results — including getting true mute and instant response to volume control and pause commands — you should access the hardware volume controls. Use `amixer` or `alsamixer` or similar to discover the name of the volume controller to be used after the `-c` option.
 
-Here is an example for for a Raspberry Pi using its internal soundcard -- device hw:0 -- that drives the headphone jack:
+Here is an example for for a Raspberry Pi using its internal soundcard — device hw:0 — that drives the headphone jack:
 ```
 general = {
   name = "Mike's Boombox";
@@ -254,7 +252,7 @@ alsa = {
 };
 ```
 
-For an NSLU2, which has no internal soundcard, there appears to be a bug in ALSA -- you can not specify a device other than "default". Thus:
+For an NSLU2, which has no internal soundcard, there appears to be a bug in ALSA — you can not specify a device other than "default". Thus:
 
 On an NSLU2, to drive a first generation Griffin iMic:
 ```
