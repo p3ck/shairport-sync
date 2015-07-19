@@ -27,19 +27,19 @@ What else?
 * Hardware Mute — Shairport Sync will mute properly if the hardware supports it.
 * Fast Response — With hardware volume control, response is instantaneous; otherwise the response time is 0.15 seconds.
 * Non-Interruptible — Shairport Sync sends back a "busy" signal if it's already playing audio from another source, so other sources can't disrupt an existing Shairport Sync session. (If a source disappears without warning, the session automatically terminates after two minutes and the device becomes available again.)
-* Metadata — Shairport Sync can be configured to deliver metadata, such as Album Name, Artist Name, Cover Art, etc. through a pipe to a recipient application program -- see https://github.com/mikebrady/shairport-sync-metadata-reader for a sample recipient.
-* Raw Audio — Shairport Sync can deliver raw PCM audio to standard output or to a pipe. This output is delivered synchronously with the source after the apprpropriate latency and is not interpolated or "stuffed" on its way through Shairport Sync.
-* Autotools and Libtool Support — One important difference between Shairpport Sync and other versions of Shairport is that the Shairport Sync build process uses GNU autotools and libtool to examine and configure the build environment -- very important for cross compilation. Previous versions of Shairport looked at the current system to determine which packages were available, instead of looking at the target system for what packages were available.
+* Metadata — Shairport Sync can be configured to deliver metadata, such as Album Name, Artist Name, Cover Art, etc. through a pipe to a recipient application program — see https://github.com/mikebrady/shairport-sync-metadata-reader for a sample recipient.
+* Raw Audio — Shairport Sync can deliver raw PCM audio to standard output or to a pipe. This output is delivered synchronously with the source after the appropriate latency and is not interpolated or "stuffed" on its way through Shairport Sync.
+* Autotools and Libtool Support — One important difference between Shairport Sync and other versions of Shairport is that the Shairport Sync build process uses GNU autotools and libtool to examine and configure the build environment — very important for cross compilation. Previous versions of Shairport looked at the current system to determine which packages were available, instead of looking at the target system for what packages were available.
 
 Status
 ------
 Shairport Sync works on a wide variety of Linux devices. It works on standard Ubuntu laptops, on the Raspberry Pi with Raspian, Arch Linux and OpenWrt, and it runs on a Linksys NSLU2 and a TP-Link 710N using OpenWrt. It works with built-in audio and with a variety of USB-connected audio amplifiers and DACs, including a cheapo USB "3D Sound" dongle, a first generation iMic and a Topping TP30 amplifier with a USB DAC input.
 
-Shairport Sync runs well on the Raspberry Pi. It can drive the built-in sound card, though the audio out of the card is of poor quality. USB-connected sound cards work well on later versions of Raspian; however older versions of Raspian appear to suffer from a problem -- see http://www.raspberrypi.org/forums/viewtopic.php?t=23544, so it is wise to update. Shairport Sync works well with the IQAudIO Pi-DAC -- see http://www.iqaudio.com.
+Shairport Sync runs well on the Raspberry Pi. It can drive the built-in sound card, though the audio out of the card is of poor quality. USB-connected sound cards work well on later versions of Raspian; however older versions of Raspian appear to suffer from a problem — see http://www.raspberrypi.org/forums/viewtopic.php?t=23544, so it is wise to update. Shairport Sync works well with the IQAudIO Pi-DAC — see http://www.iqaudio.com.
 
 At the time of writing, OpenWrt trunk does not support USB audio well on the Raspberry Pi.
 
-Shairport Sync runs on Ubuntu and Debian inside VMWare Fusion 7 on a Mac, but synchronisation does not work -- possibly because the soundcard is being emulated.
+Shairport Sync runs on Ubuntu and Debian inside VMWare Fusion 7 on a Mac, but synchronisation does not work — possibly because the soundcard is being emulated.
 
 Shairport Sync will output to alsa cards, to standard output and to pipes using appropriate backends. You can try compiling additional backends in as you wish, but it definitely will not work properly with them. Maybe someday...
 
@@ -68,7 +68,7 @@ The following libraries are required:
 Optional:
 * libsoxr
 
-Many linux distributions have Avahi and OpenSSL already in place, so normally it probably makes sense to choose those options rather than tinysvcmdns or PolarSSL. Libsoxr is available in recent linux distributions, but it requires lots of processor power — chances are an embedded processor won't be able to keep up.
+Many Linux distributions have Avahi and OpenSSL already in place, so normally it probably makes sense to choose those options rather than tinysvcmdns or PolarSSL. Libsoxr is available in recent Linux distributions, but it requires lots of processor power — chances are an embedded processor won't be able to keep up.
 
 Assuming the usual build essentials and git, Debian, Ubuntu and Raspian users can get the basics with:
 
@@ -120,7 +120,7 @@ Configuring Shairport Sync
 --------
 There are two logically distinct parts to getting Shairport Sync to run properly on your machine — (1) starting and stopping it and (2) ensuring it has the right settings.
 
-Starting and stopping automatically is taken care of differently in different versions of Linux. By default, when you run `$sudo make install`, a System V startup script is placed at `/etc/init.d/shairport-sync`. This will not be appropriate in Linuxes that use `systemd` such as Arch Linux and recent versions of Debian (?), so please look at the separate installation scripts for those.
+Starting and stopping automatically is taken care of differently in different versions of Linux. By default, when you run `$sudo make install`, a System V startup script is placed at `/etc/init.d/shairport-sync`. This will not be appropriate in Linuxes that use `systemd` such as Arch Linux, so please look at the separate installation scripts for those.
 
 To get the best from Shairport Sync, you’ll need to (1) give Shairport Sync a service name by which it will be seen in iTunes etc., (2) specify the output device to use and (3) specify the name of the mixer volume control to use to control the output level. To get values for (2) and (3) you might need to explore the ALSA output devices with a program like `alsamixer` or similar.
 
@@ -128,7 +128,7 @@ Shairport Sync reads settings from a configuration file at `/etc/shairport-sync.
 
 A sample configuration file is installed (or updated) at `/etc/shairport-sync.conf.sample`. This contains all the setting groups and all the settings available, but they all are commented out (comments begin with `//`) so that default values are used. The file contains explanations of the settings, useful hints and suggestions.
 
-Settings in the configuration file are grouped. For instance, there is a `general` group within which you can use the `name` tag to set the service name. Suppose you wanted to set the name of the service to `Front Room`, give the service the password `secret` and used `libsoxr` interpolation, then you should un-comment the line in the `general` group that has the tag `name` and enter the name you wish to use:
+Settings in the configuration file are grouped. For instance, there is a `general` group within which you can use the `name` tag to set the service name. Suppose you wanted to set the name of the service to `Front Room`, give the service the password `secret` and used `libsoxr` interpolation, then you should do the following:
 
 ```
 general =
@@ -141,7 +141,7 @@ general =
 ```
 The `alsa` group is used to specify properties of the output device. The most obvious setting is the name of the output device which you can set using the `output_device` tag.
 
-The following settings are very important for maximum performance. If your audio device has a hardware mixer and volume control, then Shairport Sync can use them to give instant response to volume and mute commands and it can offload some work from the processor.
+The following `alsa` group settings are very important for maximum performance. If your audio device has a hardware mixer and volume control, then Shairport Sync can use them to give instant response to volume and mute commands and it can offload some work from the processor.
 * The `mixer_device` tag allows you specify where the mixer is. By default, the mixer is to be found where you specify with the `output_device` tag, so you only need to use the `mixer_device` tag if the mixer is elsewhere. This can happen if you specify a *device* rather than a *card* with the `output_device` tag, because normally a mixer is associated with a *card* rather than a device. For example, if you specified that the output device was device 5 of card hw:0 and if the mixer was associated with the card, you would write `output_device = "hw:0,5";` and `mixer_device = "hw:0";`. 
 * The `mixer_type` tag allows you to specify the type of audio mixer -- `software` (default) or `hardware`.
 * The `mixer_control_name` tag allows you to specify the name of the volume control on the hardware mixer.
@@ -171,14 +171,14 @@ Command Line Arguments
 
 You can use command line arguments to provide settings to Shairport Sync as before. For full information, please read the Shairport Sync `man` page, also available at  http://htmlpreview.github.io/?https://github.com/mikebrady/shairport-sync/blob/update-documentation/man/shairport-sync.html.
 
-Apart from the following options, all command line options can be replaced by settings in the configuration file:
-* The `c` option allows you to specify the location of the configuration file — default is `/etc/shairport-sync.conf`.
+Apart from the following options, all command line options can be replaced by settings in the configuration file. Here is a brief description of command line options that are not replicated by settings in the settings file.
+
+* The `-c` option allows you to specify the location of the configuration file — default is `/etc/shairport-sync.conf`.
 * The `-V` option gives you version information about  Shairport Sync and then quits.
 * The `-d` option causes Shairport Sync to properly daemonise itself, that is, to run in the background. You may need sudo privileges for this.
 * The `-k` option causes Shairport Sync to kill an existing Shairport Sync daemon and then quit. You need to have sudo privileges for this.
 
 The System V init script at `/etc/init.d/shairport-sync` has a bare minimum :
-
 `-d`
 
 Basically all it does is put the program in daemon mode. The program will read its settings from the configuration file, normally `/etc/shairport-sync.conf`.
@@ -218,6 +218,7 @@ Here is an example of using soxr-based resampling and driving a Topping TP30 Dig
 ```
 general = {
   name = "Kitchen";
+  interpolation = "soxr";
 };
 
 alsa = {
