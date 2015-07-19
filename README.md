@@ -142,27 +142,22 @@ general =
 The `alsa` group is used to specify properties of the output device. The most obvious setting is the name of the output device which you can set using the `output_device` tag.
 
 The following `alsa` group settings are very important for maximum performance. If your audio device has a hardware mixer and volume control, then Shairport Sync can use them to give instant response to volume and mute commands and it can offload some work from the processor.
-* The `mixer_device` tag allows you specify where the mixer is. By default, the mixer is to be found where you specify with the `output_device` tag, so you only need to use the `mixer_device` tag if the mixer is elsewhere. This can happen if you specify a *device* rather than a *card* with the `output_device` tag, because normally a mixer is associated with a *card* rather than a device. For example, if you specified that the output device was device 5 of card hw:0 and if the mixer was associated with the card, you would write `output_device = "hw:0,5";` and `mixer_device = "hw:0";`. 
 * The `mixer_type` tag allows you to specify the type of audio mixer -- `software` (default) or `hardware`.
 * The `mixer_control_name` tag allows you to specify the name of the volume control on the hardware mixer.
-
-Say you wish to use the output device 5 of card hw:0 and the mixer volume-control named "PCM":
+* The `mixer_device` tag allows you specify where the mixer is. By default, the mixer is to be found where you specify with the `output_device` tag, so you only need to use the `mixer_device` tag if the mixer is elsewhere. This can happen if you specify a *device* rather than a *card* with the `output_device` tag, because normally a mixer is associated with a *card* rather than a device. Suppose you wish to use the output device `5` of card `hw:0` and the mixer volume-control named `PCM`:
 
 ```
 alsa =
 {
   output_device = "hw:0,5";
-  mixer_device = "hw:0";
   mixer_type = "hardware";
+  mixer_device = "hw:0";
   mixer_control_name = "PCM";
   // ... other alsa settings
 };
 ```
 
-You can make Shairport Sync run programs just before it starts to play an audio stream and just after it finishes using the `sessioncontrol` group settings `run_this_before_play_begins` and `run_this_after_play_ends`.
-This is to facilitate situations where something has to be done before and after playing, e.g. switching on an amplifier beforehand and switching it off afterwards.
-
-Set the `wait_for_completion` value to `"yes"` for Shairport Sync to wait until the respective commands have been completed before continuing.
+Shairport Sync can run programs just before it starts to play an audio stream and just after it finishes. You specify them using the `sessioncontrol` group settings `run_this_before_play_begins` and `run_this_after_play_ends`. This is to facilitate situations where something has to be done before and after playing, e.g. switching on an amplifier beforehand and switching it off afterwards. Set the `wait_for_completion` value to `"yes"` for Shairport Sync to wait until the respective commands have been completed before continuing.
 
 Please note that the full path to the programs must be specified, and script files will not be executed unless they are marked as executable and have the standard `#!/bin/...` first line. (This behaviour may be different from other Shairports.)
 
@@ -309,7 +304,7 @@ If you turn on the `general`  `statistics` setting, statistics like this will be
 
 "Sync error" is the average deviation from exact synchronisation. The example above indicates that the output is on average 35.4 frames ahead of exact synchronisation. Sync is allowed to wander by the tolerance — 88 frames (± 2 milliseconds) by default — before a correction will be made.
 
-"Net correction" is actually the net sum of corrections — the number of frame insertions less the number of frame deletions — given as a moving average in parts per million. After an initial settling period, it represents the divergence between the source clock and the sound device's clock. The example above indicates that the output DAC's clock is running 24.2 ppm faster than the source's clock.
+"Net correction" is actually the net sum of corrections — the number of frame insertions less the number of frame deletions — given as a moving average in parts per million. After an initial settling period, it represents the divergence between the rate at which frames are generated at the source and the rate at which the output device consumes them. The example above indicates that the output device is consuming frames 24.2 ppm faster than the source is generating them.
 
 "Corrections" is the number of frame insertions plus the number of frame deletions (i.e. the total number of corrections), given as a moving average in parts per million. The closer this is to the absolute value of the drift, the fewer "unnecessary" corrections that are being made. Third party programs tend to have much larger levels of corrections.
 
