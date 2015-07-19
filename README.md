@@ -111,8 +111,8 @@ Omit the `--with-soxr` if the libsoxr library is not available.
 
 Run `$sudo make install` to install `shairport-sync` along with a default configuration file and a System V startup script to launch it automatically at system startup. The settings are the most basic defaults, so you will want to edit the configuration — the file is `/etc/shairport-sync.conf` — to give the service a name, use a specific sound card, use the hardware mixer and volume control, etc. — there are some examples in the sample configuration file.
 
-Man Page
---------
+*Man Page*
+
 You can view the man page here: http://htmlpreview.github.io/?https://github.com/mikebrady/shairport-sync/blob/update-documentation/man/shairport-sync.html
 
 
@@ -161,8 +161,7 @@ Shairport Sync can run programs just before it starts to play an audio stream an
 
 Please note that the full path to the programs must be specified, and script files will not be executed unless they are marked as executable and have the standard `#!/bin/...` first line. (This behaviour may be different from other Shairports.)
 
-Command Line Arguments
---------
+*Command Line Arguments*
 
 You can use command line arguments to provide settings to Shairport Sync as before. For full information, please read the Shairport Sync `man` page, also available at  http://htmlpreview.github.io/?https://github.com/mikebrady/shairport-sync/blob/update-documentation/man/shairport-sync.html.
 
@@ -176,7 +175,8 @@ Apart from the following options, all command line options can be replaced by se
 The System V init script at `/etc/init.d/shairport-sync` has a bare minimum :
 `-d`. Basically all it does is put the program in daemon mode. The program will read its settings from the configuration file, normally `/etc/shairport-sync.conf`.
 
-*Examples*
+Examples
+--------
 
 Here are some examples of complete configuration files. 
 
